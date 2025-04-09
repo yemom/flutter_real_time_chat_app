@@ -10,7 +10,7 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColor.background,
         title: Text('Home page', style: TextStyle(color: AppColor.font)),
-        actions: [Icon(Icons.location_on_outlined)],
+        actions: [Icon(Icons.location_on_outlined, color: AppColor.font)],
       ),
       body: ListView(children: mockUserFromServer()),
     );
