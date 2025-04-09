@@ -1,39 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:myfirst_flutter_project/component/post_item.dart';
+import 'package:myfirst_flutter_project/pages/tool_bar.dart';
 import 'package:myfirst_flutter_project/style/app_color.dart';
+import 'package:myfirst_flutter_project/style/app_text.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
+  List<String> users = [];
 
   @override
   Widget build(BuildContext context) {
+    mockUserFromServer();
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColor.background,
-        title: Text('Home page', style: TextStyle(color: AppColor.font)),
-        actions: [Icon(Icons.location_on_outlined, color: AppColor.font)],
+      appBar: ToolBar(
+        title: "Esrom's project",
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: SvgPicture.asset(
+              'assets/svg/location.svg',
+              height: 24,
+              width: 24,
+            ),
+          ),
+        ],
       ),
-      body: ListView(children: mockUserFromServer()),
+      body: ListView.separated(
+        itemBuilder: (context, index) {
+          return PostItem(user: users[index]);
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return SizedBox(height: 24);
+        },
+        itemCount: users.length,
+      ),
     );
   }
 
-  Widget_userItem() {
-    return Row(
-      children: [
-        Image.asset(
-          'assets/temp/beryl.chung%40mediamonks.com.jpg',
-          width: 40,
-          height: 40,
-        ),
-        SizedBox(width: 16),
-        Text('Beryl Chung'),
-      ],
-    );
-  }
-
-  List<Widget> mockUserFromServer() {
-    List<Widget> users = [];
+  mockUserFromServer() {
     for (int i = 0; i < 1000; i++) {
-      users.add(Widget_userItem());
+      users.add('user number $i');
     }
     return users;
   }

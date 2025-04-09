@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:myfirst_flutter_project/pages/home_page.dart';
+import 'package:myfirst_flutter_project/pages/profile_page.dart';
 
 class MainPages extends StatefulWidget {
   const MainPages({super.key});
@@ -46,7 +47,7 @@ class _MainPagesState extends State<MainPages> {
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
-              'assets/svg/messsage.svg',
+              'assets/svg/message.svg',
               color: Colors.black,
               height: 24,
               width: 24,
@@ -82,6 +83,6 @@ class _MainPagesState extends State<MainPages> {
     Center(child: Text('Favorite')),
     Center(child: Text('Message')),
     Center(child: Text('Add Post')),
-    Center(child: Text('User')),
+    ProfilePage(),
   ];
 }
