@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myfirst_flutter_project/config/app_route.dart';
 import 'package:myfirst_flutter_project/pages/tool_bar.dart';
 import 'package:myfirst_flutter_project/style/app_text.dart';
 
@@ -17,7 +18,7 @@ class ProfilePage extends StatelessWidget {
             onSelected: (value) {
               switch (value) {
                 case ProfileMenu.edit:
-                  print('edit');
+                  Navigator.of(context).pushNamed(AppRoute.editProfile);
                   break;
                 case ProfileMenu.logout:
                   print('logout');
@@ -27,10 +28,10 @@ class ProfilePage extends StatelessWidget {
             },
             itemBuilder: (context) {
               return [
-                PopupMenuItem(child: Text('Edit'), value: ProfileMenu.edit),
+                PopupMenuItem(value: ProfileMenu.edit, child: Text('Edit')),
                 PopupMenuItem(
-                  child: Text('Log out'),
                   value: ProfileMenu.logout,
+                  child: Text('Log out'),
                 ),
               ];
             },

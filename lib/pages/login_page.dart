@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:myfirst_flutter_project/config/app_route.dart';
+import 'package:myfirst_flutter_project/config/app_string.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -15,7 +17,7 @@ class LoginPage extends StatelessWidget {
               children: [
                 Spacer(),
                 Text(
-                  'Hello, welcome back!',
+                  AppString.helloWelcome,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 22,
@@ -25,7 +27,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 SizedBox(height: 18),
                 Text(
-                  'Login to continue',
+                  AppString.logninToContinue,
                   style: TextStyle(color: Colors.white),
                 ),
                 Spacer(),
@@ -57,7 +59,7 @@ class LoginPage extends StatelessWidget {
                       print('Forgot is clicked');
                     },
                     style: TextButton.styleFrom(foregroundColor: Colors.white),
-                    child: Text('Forgot password ?'),
+                    child: Text(AppString.forgotPassword),
                   ),
                 ),
                 SizedBox(height: 32),
@@ -65,22 +67,28 @@ class LoginPage extends StatelessWidget {
                   width: 250,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).pushReplacementNamed('/main');
+                      Navigator.of(context).pushReplacementNamed(AppRoute.main);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.amber,
                       foregroundColor: Colors.black,
                     ),
-                    child: Text('Login'),
+                    child: Text(AppString.login),
                   ),
                 ),
                 Spacer(),
-                Text('Or sign with', style: TextStyle(color: Colors.white)),
+                Text(
+                  AppString.orSignWith,
+                  style: TextStyle(color: Colors.white),
+                ),
                 SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
                     print('Google is clicked');
                   },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                  ),
                   child: SizedBox(
                     height: 48,
                     child: Row(
@@ -93,7 +101,7 @@ class LoginPage extends StatelessWidget {
                         ),
                         SizedBox(width: 10),
                         Text(
-                          'Login with goolge',
+                          AppString.loginWithGoogle,
                           style: TextStyle(color: Colors.black),
                         ),
                       ],
@@ -105,7 +113,9 @@ class LoginPage extends StatelessWidget {
                   onPressed: () {
                     print('Facebook is clicked');
                   },
-
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                  ),
                   child: SizedBox(
                     height: 48,
                     child: Row(
@@ -118,7 +128,7 @@ class LoginPage extends StatelessWidget {
                         ),
                         SizedBox(width: 10),
                         Text(
-                          'Login with facebook',
+                          AppString.loginWithFacebook,
                           style: TextStyle(color: Colors.black),
                         ),
                       ],
@@ -129,7 +139,7 @@ class LoginPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Don't have an account",
+                      AppString.dontHaveAnAccount,
                       style: TextStyle(color: Colors.white),
                     ),
                     TextButton(
@@ -138,7 +148,7 @@ class LoginPage extends StatelessWidget {
                         foregroundColor: Colors.amber,
                       ),
                       child: Text(
-                        'Sign up',
+                        AppString.signup,
                         style: TextStyle(decoration: TextDecoration.underline),
                       ),
                     ),

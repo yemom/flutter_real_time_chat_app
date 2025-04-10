@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myfirst_flutter_project/component/post_item.dart';
 import 'package:myfirst_flutter_project/pages/tool_bar.dart';
-import 'package:myfirst_flutter_project/style/app_color.dart';
-import 'package:myfirst_flutter_project/style/app_text.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
