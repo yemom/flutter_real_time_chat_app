@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myfirst_flutter_project/style/app_color.dart';
 
 class AppTextField extends StatelessWidget {
   final String hint;
@@ -11,7 +12,7 @@ class AppTextField extends StatelessWidget {
         hintText: hint,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
         filled: true,
-        fillColor: Colors.white.withOpacity(0.5),
+        fillColor: AppColor.fildolor,
       ),
     );
   }
