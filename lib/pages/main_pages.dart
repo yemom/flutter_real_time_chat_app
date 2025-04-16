@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:myfirst_flutter_project/config/app_icon.dart';
+import 'package:myfirst_flutter_project/style/app_color.dart';
+import 'package:vector_math/vector_math_64.dart' as vec;
+
 import 'package:myfirst_flutter_project/pages/home_page.dart';
 import 'package:myfirst_flutter_project/pages/profile_page.dart';
 
@@ -16,9 +20,10 @@ class _MainPagesState extends State<MainPages> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: pages[currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: MyBottomNavigation(),
+      /**BottomNavigationBar(
         items: [
-          BottomNavigationBarItem(
+          BottomNavigationBarItem(sss
             icon: SvgPicture.asset(
               'assets/svg/home.svg',
 
@@ -69,7 +74,7 @@ class _MainPagesState extends State<MainPages> {
         showSelectedLabels: false,
         showUnselectedLabels: false,
         backgroundColor: Colors.amber,
-      ),
+      ),**/
     );
   }
 
@@ -80,4 +85,80 @@ class _MainPagesState extends State<MainPages> {
     Center(child: Text('Add Post')),
     ProfilePage(),
   ];
+}
+
+class MyBottomNavigation extends StatefulWidget {
+  const MyBottomNavigation({super.key});
+
+  @override
+  State<MyBottomNavigation> createState() => _MyBottomNavigationState();
+}
+
+class _MyBottomNavigationState extends State<MyBottomNavigation> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 87,
+      margin: EdgeInsets.all(24),
+      child: Stack(
+        children: [
+          Positioned(
+            left: 0,
+            right: 0,
+            top: 17,
+            child: Container(
+              height: 70,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(25)),
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: AppIcon.svg(AppIcon.home),
+                    ),
+                  ),
+                  Expanded(
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: AppIcon.svg(AppIcon.favorite),
+                    ),
+                  ),
+                  Expanded(
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: AppIcon.svg(AppIcon.message),
+                    ),
+                  ),
+                  Expanded(
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: AppIcon.svg(AppIcon.user),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Positioned(
+            left: 0,
+            right: 0,
+            top: 0,
+            child: Container(
+              width: 64,
+              height: 64,
+              padding: const EdgeInsets.all(18),
+              decoration: BoxDecoration(
+                color: AppColor.primary,
+                shape: BoxShape.circle,
+              ),
+              child: AppIcon.svg(AppIcon.add),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
