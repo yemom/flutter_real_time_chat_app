@@ -21,7 +21,7 @@ class _MainPagesState extends State<MainPages> {
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
               'assets/svg/home.svg',
-              color: Colors.black,
+
               height: 24,
               width: 24,
             ),
@@ -30,25 +30,20 @@ class _MainPagesState extends State<MainPages> {
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
               'assets/svg/favorite.svg',
-              color: Colors.black,
+
               height: 24,
               width: 24,
             ),
             label: 'Favorite',
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'assets/svg/add.svg',
-              color: Colors.black,
-              height: 24,
-              width: 24,
-            ),
+            icon: SvgPicture.asset('assets/svg/add.svg', height: 24, width: 24),
             label: 'Add Post',
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
               'assets/svg/message.svg',
-              color: Colors.black,
+
               height: 24,
               width: 24,
             ),
@@ -57,7 +52,7 @@ class _MainPagesState extends State<MainPages> {
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
               'assets/svg/user.svg',
-              color: Colors.black,
+
               height: 24,
               width: 24,
             ),

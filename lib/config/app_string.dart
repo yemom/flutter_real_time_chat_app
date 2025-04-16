@@ -1,4 +1,3 @@
-import 'package:myfirst_flutter_project/pages/edit_profile_page.dart';
 
 class AppString {
   static const profile = 'profile';
@@ -26,9 +25,11 @@ class AppString {
   static const phoneNumber = 'Phone number';
   static const location = 'Location';
   static const login = 'Log in';
+  static const logout = 'Log out';
   static const birthday = 'Birthday';
   static const male = 'Male';
   static const fimale = 'Fimale';
   static const other = 'Other';
   static const gender = 'Gender';
+  static const edit = 'Edit';
 }

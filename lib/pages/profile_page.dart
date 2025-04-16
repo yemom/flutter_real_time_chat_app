@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myfirst_flutter_project/component/user_avatar.dart';
 import 'package:myfirst_flutter_project/config/app_route.dart';
+import 'package:myfirst_flutter_project/config/app_string.dart';
 import 'package:myfirst_flutter_project/pages/tool_bar.dart';
 import 'package:myfirst_flutter_project/style/app_text.dart';
 
@@ -29,10 +30,13 @@ class ProfilePage extends StatelessWidget {
             },
             itemBuilder: (context) {
               return [
-                PopupMenuItem(value: ProfileMenu.edit, child: Text('Edit')),
+                PopupMenuItem(
+                  value: ProfileMenu.edit,
+                  child: Text(AppString.edit),
+                ),
                 PopupMenuItem(
                   value: ProfileMenu.logout,
-                  child: Text('Log out'),
+                  child: Text(AppString.logout),
                 ),
               ];
             },
@@ -53,16 +57,19 @@ class ProfilePage extends StatelessWidget {
               Column(
                 children: [
                   Text('997', style: AppText.header2),
-                  Text('Followers'),
+                  Text(AppString.followers),
                 ],
               ),
               Column(
-                children: [Text('87', style: AppText.header2), Text('Posts')],
+                children: [
+                  Text('87', style: AppText.header2),
+                  Text(AppString.posts),
+                ],
               ),
               Column(
                 children: [
                   Text('839', style: AppText.header2),
-                  Text('Following'),
+                  Text(AppString.folowing),
                 ],
               ),
             ],

@@ -4,11 +4,12 @@ import 'package:myfirst_flutter_project/component/user_avatar.dart';
 import 'package:myfirst_flutter_project/config/app_string.dart';
 import 'package:myfirst_flutter_project/pages/tool_bar.dart';
 import 'package:myfirst_flutter_project/style/app_color.dart';
+import 'package:myfirst_flutter_project/style/app_text.dart';
 
 enum Gender { none, male, female, other }
 
 class EditProfilePage extends StatefulWidget {
-  EditProfilePage({super.key});
+  const EditProfilePage({super.key});
 
   @override
   State<EditProfilePage> createState() => _EditProfilePageState();
@@ -56,21 +57,30 @@ class _EditProfilePageState extends State<EditProfilePage> {
             AppTextField(hint: AppString.location),
             SizedBox(height: 16),
             AppTextField(hint: AppString.birthday),
+            SizedBox(height: 16),
             Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
                 color: AppColor.fildolor,
                 borderRadius: BorderRadius.all(Radius.circular(12)),
               ),
               child: Column(
-                children: [ 
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  Text(AppString.gender),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    AppString.gender,
+                    style: AppText.body1.copyWith(fontSize: 12),
+                  ),
                   Row(
                     children: [
                       Expanded(
                         child: RadioListTile(
                           title: Text(AppString.male),
                           value: Gender.male,
+                          visualDensity: const VisualDensity(
+                            horizontal: VisualDensity.minimumDensity,
+                            vertical: VisualDensity.maximumDensity,
+                          ),
                           contentPadding: EdgeInsets.zero,
                           groupValue: gender,
                           onChanged: (value) {
@@ -84,6 +94,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         child: RadioListTile(
                           title: Text(AppString.fimale),
                           value: Gender.female,
+                          visualDensity: const VisualDensity(
+                            horizontal: VisualDensity.minimumDensity,
+                            vertical: VisualDensity.maximumDensity,
+                          ),
                           contentPadding: EdgeInsets.zero,
                           groupValue: gender,
                           onChanged: (value) {
@@ -97,6 +111,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         child: RadioListTile(
                           title: Text(AppString.other),
                           value: Gender.other,
+                          visualDensity: const VisualDensity(
+                            horizontal: VisualDensity.minimumDensity,
+                            vertical: VisualDensity.maximumDensity,
+                          ),
                           contentPadding: EdgeInsets.zero,
                           groupValue: gender,
                           onChanged: (value) {
