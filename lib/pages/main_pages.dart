@@ -1,82 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myfirst_flutter_project/config/app_icon.dart';
-import 'package:myfirst_flutter_project/style/app_color.dart';
-import 'package:vector_math/vector_math_64.dart' as vec;
-
 import 'package:myfirst_flutter_project/pages/home_page.dart';
 import 'package:myfirst_flutter_project/pages/profile_page.dart';
+import 'package:myfirst_flutter_project/style/app_color.dart';
 
 class MainPages extends StatefulWidget {
   const MainPages({super.key});
 
   @override
-  State<MainPages> createState() => _MainPagesState();
+  State<MainPages> createState() => _MainPageState();
 }
 
-class _MainPagesState extends State<MainPages> {
-  int currentIndex = 0;
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: pages[currentIndex],
-      bottomNavigationBar: MyBottomNavigation(),
-      /**BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(sss
-            icon: SvgPicture.asset(
-              'assets/svg/home.svg',
-
-              height: 24,
-              width: 24,
-            ),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'assets/svg/favorite.svg',
-
-              height: 24,
-              width: 24,
-            ),
-            label: 'Favorite',
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset('assets/svg/add.svg', height: 24, width: 24),
-            label: 'Add Post',
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'assets/svg/message.svg',
-
-              height: 24,
-              width: 24,
-            ),
-            label: 'Message',
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'assets/svg/user.svg',
-
-              height: 24,
-              width: 24,
-            ),
-            label: 'User',
-          ),
-        ],
-        currentIndex: currentIndex,
-        onTap: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
-        type: BottomNavigationBarType.fixed,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        backgroundColor: Colors.amber,
-      ),**/
-    );
-  }
+class _MainPageState extends State<MainPages> {
+  Menus currentIndex = Menus.home;
 
   final pages = [
     HomePage(),
@@ -85,56 +21,77 @@ class _MainPagesState extends State<MainPages> {
     Center(child: Text('Add Post')),
     ProfilePage(),
   ];
-}
-
-class MyBottomNavigation extends StatefulWidget {
-  const MyBottomNavigation({super.key});
 
   @override
-  State<MyBottomNavigation> createState() => _MyBottomNavigationState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: pages[currentIndex.index],
+      bottomNavigationBar: MyBottomNavigation(
+        currentIndex: currentIndex.index,
+        onTap: (value) {
+          setState(() {
+            currentIndex = value;
+          });
+        },
+      ),
+    );
+  }
 }
 
-class _MyBottomNavigationState extends State<MyBottomNavigation> {
+enum Menus { home, favorite, message, add, user }
+
+class MyBottomNavigation extends StatelessWidget {
+  final int currentIndex;
+  final ValueChanged<Menus> onTap;
+
+  const MyBottomNavigation({
+    super.key,
+    required this.currentIndex,
+    required this.onTap,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 87,
       margin: EdgeInsets.all(24),
       child: Stack(
+        alignment: Alignment.topCenter,
         children: [
           Positioned(
+            top: 17,
             left: 0,
             right: 0,
-            top: 17,
             child: Container(
               height: 70,
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(25)),
+                borderRadius: BorderRadius.circular(25),
               ),
               child: Row(
                 children: [
                   Expanded(
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: () => onTap(Menus.home),
                       icon: AppIcon.svg(AppIcon.home),
                     ),
                   ),
                   Expanded(
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: () => onTap(Menus.favorite),
                       icon: AppIcon.svg(AppIcon.favorite),
                     ),
                   ),
+                  Spacer(),
                   Expanded(
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: () => onTap(Menus.message),
                       icon: AppIcon.svg(AppIcon.message),
                     ),
                   ),
                   Expanded(
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: () => onTap(Menus.user),
                       icon: AppIcon.svg(AppIcon.user),
                     ),
                   ),
@@ -143,18 +100,19 @@ class _MyBottomNavigationState extends State<MyBottomNavigation> {
             ),
           ),
           Positioned(
-            left: 0,
-            right: 0,
             top: 0,
-            child: Container(
-              width: 64,
-              height: 64,
-              padding: const EdgeInsets.all(18),
-              decoration: BoxDecoration(
-                color: AppColor.primary,
-                shape: BoxShape.circle,
+            child: GestureDetector(
+              onTap: () => onTap(Menus.add),
+              child: Container(
+                width: 64,
+                height: 64,
+                padding: EdgeInsets.all(18),
+                decoration: BoxDecoration(
+                  color: AppColor.primary,
+                  shape: BoxShape.circle,
+                ),
+                child: AppIcon.svg(AppIcon.add),
               ),
-              child: AppIcon.svg(AppIcon.add),
             ),
           ),
         ],
