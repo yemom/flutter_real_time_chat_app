@@ -25,9 +25,10 @@ class _MainPageState extends State<MainPages> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       body: pages[currentIndex.index],
       bottomNavigationBar: MyBottomNavigation(
-        currentIndex: currentIndex.index,
+        currentIndex: currentIndex,
         onTap: (value) {
           setState(() {
             currentIndex = value;
@@ -41,7 +42,7 @@ class _MainPageState extends State<MainPages> {
 enum Menus { home, favorite, message, add, user }
 
 class MyBottomNavigation extends StatelessWidget {
-  final int currentIndex;
+  final Menus currentIndex;
   final ValueChanged<Menus> onTap;
 
   const MyBottomNavigation({
@@ -73,26 +74,50 @@ class MyBottomNavigation extends StatelessWidget {
                   Expanded(
                     child: IconButton(
                       onPressed: () => onTap(Menus.home),
-                      icon: AppIcon.svg(AppIcon.home),
+                      icon: AppIcon.svg(
+                        AppIcon.home,
+                        color:
+                            currentIndex == Menus.home
+                                ? Colors.black
+                                : Colors.black.withOpacity(0.3),
+                      ),
                     ),
                   ),
                   Expanded(
                     child: IconButton(
                       onPressed: () => onTap(Menus.favorite),
-                      icon: AppIcon.svg(AppIcon.favorite),
+                      icon: AppIcon.svg(
+                        AppIcon.favorite,
+                        color:
+                            currentIndex == Menus.favorite
+                                ? Colors.black
+                                : Colors.black.withOpacity(0.3),
+                      ),
                     ),
                   ),
                   Spacer(),
                   Expanded(
                     child: IconButton(
                       onPressed: () => onTap(Menus.message),
-                      icon: AppIcon.svg(AppIcon.message),
+                      icon: AppIcon.svg(
+                        AppIcon.message,
+                        color:
+                            currentIndex == Menus.message
+                                ? Colors.black
+                                : Colors.black.withOpacity(0.3),
+                      ),
                     ),
                   ),
                   Expanded(
                     child: IconButton(
                       onPressed: () => onTap(Menus.user),
-                      icon: AppIcon.svg(AppIcon.user),
+                      icon: AppIcon.svg(
+                        AppIcon.user,
+                        color:
+                            currentIndex == Menus.user
+                                ? Colors.black
+                                : Colors.black.withOpacity(0.3),
+                      ),
                     ),
                   ),
                 ],
@@ -111,7 +136,13 @@ class MyBottomNavigation extends StatelessWidget {
                   color: AppColor.primary,
                   shape: BoxShape.circle,
                 ),
-                child: AppIcon.svg(AppIcon.add),
+                child: AppIcon.svg(
+                  AppIcon.add,
+                  color:
+                      currentIndex == Menus.add
+                          ? Colors.black
+                          : Colors.black.withOpacity(0.3),
+                ),
               ),
             ),
           ),

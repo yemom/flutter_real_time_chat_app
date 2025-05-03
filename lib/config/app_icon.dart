@@ -20,8 +20,8 @@ class AppIcon {
   static Widget svg(String path, {double size = 24, Color? color}) {
     return SvgPicture.asset(
       path,
-      width: 35,
-      height: 35,
+      width: size,
+      height: size,
       colorFilter:
           color != null ? ColorFilter.mode(color, BlendMode.srcIn) : null,
     );
