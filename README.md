@@ -26,4 +26,11 @@ A powerful cross-platform mobile app built with **Flutter**, created to streamli
 ---
 
 ## 📁 Project Structure
+lib/
+├── models/ # Data classes (User, Course, etc.)
+├── screens/ # UI screens for both students & tutors
+├── services/ # Firebase service layers
+├── widgets/ # Reusable UI components
+├── providers/ # App-wide state management
+└── main.dart # App entry point
 
