@@ -8,12 +8,13 @@ import 'package:provider/provider.dart';
 
 class AppRoute {
   static final pages = {
-    login: (context) => ChangeNotifierProvider(
-      create: (context) => LoginProvider(),
-      child: LoginPage(),
-    ),
+    login:
+        (context) => ChangeNotifierProvider(
+          create: (context) => LoginProvider(),
+          child: LoginPage(),
+        ),
     home: (context) => HomePage(),
-    main: (context) => MainPages(),
+    main: (context) => MainPage(),
     editProfile: (context) => EditProfilePage(),
     nearby: (contex) => NearbyPage(),
   };

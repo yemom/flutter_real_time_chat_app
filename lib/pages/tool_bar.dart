@@ -11,6 +11,13 @@ class ToolBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: AppColor.background,
+      leading:
+          Navigator.of(context).canPop()
+              ? IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () => Navigator.of(context).maybePop(),
+              )
+              : null,
       title: Text(title, style: AppText.header1),
       centerTitle: false,
       actions: actions,

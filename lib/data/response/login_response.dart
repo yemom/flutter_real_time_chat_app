@@ -1,4 +1,4 @@
-import 'package:myfirst_flutter_project/model/user.dart';
+import 'package:myfirst_flutter_project/data/model/user.dart';
 
 class LoginResponse {
   final User user;
