@@ -61,8 +61,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: AppColor.fildolor,
-                borderRadius: BorderRadius.all(Radius.circular(12)),
+                color: AppColor.fieldColor,
+                borderRadius: const BorderRadius.all(Radius.circular(12)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

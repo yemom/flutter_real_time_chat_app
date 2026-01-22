@@ -10,19 +10,28 @@ class AppTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       onChanged: onChange,
+      style: const TextStyle(color: AppColor.fontTitle, fontSize: 14),
       decoration: InputDecoration(
         hintText: hint,
-        labelText: hint,
-        labelStyle: TextStyle(color: Colors.white),
-        border: const UnderlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(12)),
+        hintStyle: const TextStyle(color: AppColor.disableFont, fontSize: 13),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 14,
+          vertical: 12,
         ),
-        focusedBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.transparent),
-          borderRadius: BorderRadius.all(Radius.circular(12)),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: AppColor.borderColor, width: 1),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: AppColor.borderColor, width: 1),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: AppColor.primaryBlue, width: 1.3),
         ),
         filled: true,
-        fillColor: AppColor.fildolor,
+        fillColor: AppColor.fieldColor,
       ),
     );
   }

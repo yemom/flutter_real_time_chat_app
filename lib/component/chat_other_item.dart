@@ -35,7 +35,7 @@ class ChatOtherItem extends StatelessWidget {
                     Text(
                       '${chat.user.firstname} ${chat.user.lastname}',
                       style: TextStyle(
-                        color: AppColor.font2,
+                        color: AppColor.fontTitle,
                         fontWeight: FontWeight.w700,
                       ),
                     ),

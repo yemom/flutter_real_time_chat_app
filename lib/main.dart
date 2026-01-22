@@ -30,8 +30,42 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'Urbanist',
+        brightness: Brightness.light,
         scaffoldBackgroundColor: AppColor.background,
-        brightness: Brightness.dark,
+        colorScheme: ColorScheme.light(
+          primary: AppColor.primary,
+          secondary: AppColor.primary,
+          surface: AppColor.cardBackground,
+          background: AppColor.background,
+          onPrimary: AppColor.black,
+          onSecondary: AppColor.black,
+          onSurface: AppColor.fontTitle,
+          onBackground: AppColor.fontTitle,
+          error: Colors.redAccent,
+          onError: AppColor.white,
+        ),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: AppColor.cardBackground,
+          elevation: 0,
+          foregroundColor: AppColor.fontTitle,
+          surfaceTintColor: Colors.transparent,
+        ),
+        textTheme: const TextTheme(
+          bodyLarge: TextStyle(color: AppColor.fontBody),
+          bodyMedium: TextStyle(color: AppColor.fontBody),
+          bodySmall: TextStyle(color: AppColor.fontLight),
+          titleMedium: TextStyle(color: AppColor.fontTitle),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColor.primary,
+            foregroundColor: AppColor.black,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(14),
+            ),
+            elevation: 0,
+          ),
+        ),
       ),
       initialRoute: AppRoute.login,
       routes: AppRoute.pages,
