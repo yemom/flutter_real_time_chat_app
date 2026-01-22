@@ -17,13 +17,27 @@ class BottomNavigationItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      onPressed: onPressed,
-      icon: SvgPicture.asset(
-        icon,
-        colorFilter: ColorFilter.mode(
-          current == name ? Colors.black : Colors.black.withOpacity(0.3),
-          BlendMode.srcIn,
+    final bool isActive = current == name;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+      child: Material(
+        color: isActive ? Colors.black.withOpacity(0.06) : Colors.transparent,
+        borderRadius: BorderRadius.circular(14),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(14),
+          onTap: onPressed,
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: SvgPicture.asset(
+              icon,
+              width: 22,
+              height: 22,
+              colorFilter: ColorFilter.mode(
+                isActive ? Colors.black : Colors.black.withOpacity(0.35),
+                BlendMode.srcIn,
+              ),
+            ),
+          ),
         ),
       ),
     );

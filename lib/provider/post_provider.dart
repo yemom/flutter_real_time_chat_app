@@ -15,6 +15,7 @@ class PostProvider extends ChangeNotifier {
   String? imagePath;
   bool _isPicking = false;
   bool isLoading = false;
+  bool isSubmitting = false;
   String? error;
 
   Future<void> getPost(String token) async {
@@ -35,19 +36,27 @@ class PostProvider extends ChangeNotifier {
   }
 
   Future<void> createPost(String token) async {
-    String? image;
-    if (imagePath != null) {
-      try {
-        image = await upload(token);
-      } catch (_) {
-        // If upload fails (e.g., 404 /upload), continue with text-only post
-        image = null;
+    if (isSubmitting) return;
+    isSubmitting = true;
+    notifyListeners();
+    try {
+      String? image;
+      if (imagePath != null) {
+        try {
+          image = await upload(token);
+        } catch (_) {
+          // If upload fails (e.g., 404 /upload), continue with text-only post
+          image = null;
+        }
       }
+      await CreatePostService(message, image, token).call();
+      message = '';
+      imagePath = null;
+      await getPost(token); // keep feed in sync
+    } finally {
+      isSubmitting = false;
+      notifyListeners();
     }
-    await CreatePostService(message, image, token).call();
-    message = '';
-    imagePath = null;
-    await getPost(token); // keep feed in sync
   }
 
   Future<void> updatePost(int id, String token, {String? newMessage}) async {
