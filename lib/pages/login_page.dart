@@ -7,14 +7,8 @@ import 'package:myfirst_flutter_project/provider/login_provider.dart';
 import 'package:myfirst_flutter_project/style/app_color.dart';
 import 'package:provider/provider.dart';
 
-const baseUrl = 'http://10.0.2.2:8081';
-
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
-
-  final loginRoute = '$baseUrl/login';
-  final usernameController = TextEditingController();
-  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +76,7 @@ class LoginPage extends StatelessWidget {
                   alignment: Alignment.centerRight,
                   child: TextButton(
                     onPressed: () {
-                      print('Forgot is clicked');
+                      Navigator.of(context).pushNamed(AppRoute.forgot);
                     },
                     style: TextButton.styleFrom(
                       foregroundColor: AppColor.primary,
@@ -214,7 +208,9 @@ class LoginPage extends StatelessWidget {
                       style: TextStyle(color: AppColor.fontBody),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(AppRoute.signup);
+                      },
                       style: TextButton.styleFrom(
                         foregroundColor: AppColor.primary,
                       ),

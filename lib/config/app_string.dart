@@ -3,7 +3,9 @@ class AppString {
   static const helloWelcome = 'Hello Welcome Back';
   static const logninToContinue = 'Login To Continue';
   static const username = 'username';
+  static const email = 'Email';
   static const password = 'password';
+  static const resetPassword = 'Reset password';
   static const forgotPassword = 'forgot password';
   static const orSignWith = 'Or sign in with';
   static const loginWithGoogle = 'Login with Google';

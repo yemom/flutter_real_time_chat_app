@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart' as parser;
-import 'package:myfirst_flutter_project/pages/login_page.dart' as AppConfig;
+import 'package:myfirst_flutter_project/config/app_config.dart';
 
 class ApiException implements Exception {
   final int? statusCode;

@@ -7,6 +7,7 @@ import '../../prisma/prisma/generated_dart_client/user_repository.dart';
 Future<Response> onRequest(RequestContext context) async {
   return switch (context.request.method) {
     HttpMethod.post => _authUser(context),
+    HttpMethod.put => _resetPassword(context),
     _ => Future.value(Response(body: 'This is default')),
   };
 }
@@ -37,4 +38,31 @@ Future<Response> _authUser(RequestContext context) async {
   return Response.json(
     body: {'message': 'User authenticated', 'user': user, 'token': token},
   );
+}
+
+Future<Response> _resetPassword(RequestContext context) async {
+  final json = (await context.request.json()) as Map<String, dynamic>;
+  final username = json['username'] as String?;
+  final newPassword = json['password'] as String?;
+
+  if (username == null || newPassword == null) {
+    return Response.json(
+      body: {'error': 'Missing username or password'},
+      statusCode: HttpStatus.badRequest,
+    );
+  }
+
+  final repo = context.read<UserRepository>();
+  final ok = await repo.resetPassword(
+    username: username,
+    newPassword: newPassword,
+  );
+  if (!ok) {
+    return Response.json(
+      body: {'error': 'User not found or reset failed'},
+      statusCode: HttpStatus.notFound,
+    );
+  }
+
+  return Response.json(body: {'message': 'Password updated'});
 }

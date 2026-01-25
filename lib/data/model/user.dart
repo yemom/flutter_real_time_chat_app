@@ -2,6 +2,7 @@ class User {
   final int id;
   final String? firstname;
   final String? lastname;
+  final String? username;
   final String? mobile;
   final String? birthday;
   final String? gender;
@@ -11,6 +12,7 @@ class User {
     this.id,
     this.firstname,
     this.lastname,
+    this.username,
     this.mobile,
     this.birthday,
     this.gender,
@@ -18,12 +20,13 @@ class User {
   );
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-    json['id'],
-    json['firstname'],
-    json['lastname'],
-    json['mobile'],
-    json['birthday'],
-    json['gender'],
-    json['visibleGender'],
+    json['id'] as int,
+    (json['firstname'] ?? json['name']) as String?,
+    (json['lastname'] ?? json['surname']) as String?,
+    json['username'] as String?,
+    json['mobile'] as String?,
+    json['birthday'] as String?,
+    json['gender'] as String?,
+    json['visibleGender'] as String?,
   );
 }

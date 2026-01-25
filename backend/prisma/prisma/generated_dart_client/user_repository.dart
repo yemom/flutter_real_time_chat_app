@@ -55,6 +55,93 @@ class UserRepository {
     return list.toList();
   }
 
+  // update a user
+  Future<User?> updateUser({
+    required int id,
+    String? name,
+    String? lastname,
+    String? username,
+    String? password,
+  }) async {
+    try {
+      final hashed = password != null ? _hashedPassword(password) : null;
+      final data =
+          orm.PrismaUnion<UserUpdateInput, UserUncheckedUpdateInput>.$1(
+            UserUpdateInput(
+              name:
+                  name != null
+                      ? orm.PrismaUnion<
+                        String,
+                        StringFieldUpdateOperationsInput
+                      >.$1(name)
+                      : null,
+              lastname:
+                  lastname != null
+                      ? orm.PrismaUnion<
+                        String,
+                        StringFieldUpdateOperationsInput
+                      >.$1(lastname)
+                      : null,
+              username:
+                  username != null
+                      ? orm.PrismaUnion<
+                        String,
+                        StringFieldUpdateOperationsInput
+                      >.$1(username)
+                      : null,
+              password:
+                  hashed != null
+                      ? orm.PrismaUnion<
+                        String,
+                        StringFieldUpdateOperationsInput
+                      >.$1(hashed)
+                      : null,
+            ),
+          );
+
+      return await _db.user.update(
+        where: UserWhereUniqueInput(id: id),
+        data: data,
+      );
+    } catch (_) {
+      return null;
+    }
+  }
+
+  // delete a user
+  Future<bool> deleteUser(int id) async {
+    try {
+      await _db.user.delete(where: UserWhereUniqueInput(id: id));
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  // reset password by username (used for forgot password)
+  Future<bool> resetPassword({
+    required String username,
+    required String newPassword,
+  }) async {
+    try {
+      final hashed = _hashedPassword(newPassword);
+      final updated = await _db.user.update(
+        where: UserWhereUniqueInput(username: username),
+        data: orm.PrismaUnion<UserUpdateInput, UserUncheckedUpdateInput>.$1(
+          UserUpdateInput(
+            password:
+                orm.PrismaUnion<String, StringFieldUpdateOperationsInput>.$1(
+                  hashed,
+                ),
+          ),
+        ),
+      );
+      return updated != null;
+    } catch (_) {
+      return false;
+    }
+  }
+
   // Fetch a user by id
   Future<User?> getById(int id) async {
     return _db.user.findUnique(where: UserWhereUniqueInput(id: id));

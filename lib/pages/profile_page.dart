@@ -6,7 +6,7 @@ import 'package:myfirst_flutter_project/config/app_route.dart';
 import 'package:myfirst_flutter_project/config/app_string.dart';
 import 'package:myfirst_flutter_project/data/model/post.dart';
 import 'package:myfirst_flutter_project/data/model/user.dart';
-import 'package:myfirst_flutter_project/pages/login_page.dart' as AppConfig;
+import 'package:myfirst_flutter_project/config/app_config.dart';
 import 'package:myfirst_flutter_project/pages/tool_bar.dart';
 import 'package:myfirst_flutter_project/provider/app_repo.dart';
 import 'package:myfirst_flutter_project/provider/post_provider.dart';
@@ -278,7 +278,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     case ProfileMenu.logout:
                       Navigator.of(context).pushNamed(AppRoute.login);
                       break;
-                    default:
                   }
                 },
                 itemBuilder: (context) {
@@ -526,13 +525,14 @@ class _ProfilePageState extends State<ProfilePage> {
                 SliverPadding(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   sliver: SliverGrid(
-                    gridDelegate:
-                        const SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 260,
-                          mainAxisExtent: 520,
-                          mainAxisSpacing: 12,
-                          crossAxisSpacing: 12,
-                        ),
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent:
+                          MediaQuery.sizeOf(context).width < 400 ? 200 : 240,
+                      // Increase height to prevent overflow on long text/devices
+                      mainAxisExtent: 520,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                    ),
                     delegate: SliverChildBuilderDelegate((context, index) {
                       final p = mine[index];
                       return _PostCard(
@@ -622,7 +622,7 @@ class _PostCard extends StatelessWidget {
       elevation: 3,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(10),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -678,7 +678,7 @@ class _PostCard extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: AspectRatio(
-                  aspectRatio: 4 / 5,
+                  aspectRatio: 3 / 4,
                   child: Image.network(
                     '${AppConfig.baseUrl}${post.image}',
                     fit: BoxFit.cover,
@@ -701,26 +701,30 @@ class _PostCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
             const SizedBox(height: 8),
-            Wrap(
-              spacing: 8,
-              runSpacing: 6,
-              alignment: WrapAlignment.spaceBetween,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _ActionButton(
-                  icon: isLiked ? Icons.favorite : Icons.favorite_border,
-                  label: likeCount > 0 ? '$likeCount Like' : 'Like',
-                  color: isLiked ? Colors.redAccent : Colors.grey.shade700,
-                  onTap: onLike,
+                Expanded(
+                  child: _ActionButton(
+                    icon: isLiked ? Icons.favorite : Icons.favorite_border,
+                    label: likeCount > 0 ? '$likeCount Like' : 'Like',
+                    color: isLiked ? Colors.redAccent : Colors.grey.shade700,
+                    onTap: onLike,
+                  ),
                 ),
-                _ActionButton(
-                  icon: Icons.mode_comment_outlined,
-                  label: 'Comment',
-                  onTap: onComment,
+                Expanded(
+                  child: _ActionButton(
+                    icon: Icons.mode_comment_outlined,
+                    label: 'Comment',
+                    onTap: onComment,
+                  ),
                 ),
-                _ActionButton(
-                  icon: Icons.share_outlined,
-                  label: 'Share',
-                  onTap: onShare,
+                Expanded(
+                  child: _ActionButton(
+                    icon: Icons.share_outlined,
+                    label: 'Share',
+                    onTap: onShare,
+                  ),
                 ),
               ],
             ),
@@ -755,11 +759,15 @@ class _ActionButton extends StatelessWidget {
           children: [
             Icon(icon, size: 16, color: color ?? Colors.grey.shade700),
             const SizedBox(width: 4),
-            Text(
-              label,
-              style: AppText.subtitle3.copyWith(
-                color: color ?? Colors.grey.shade700,
-                fontSize: 12,
+            Flexible(
+              child: Text(
+                label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppText.subtitle3.copyWith(
+                  color: color ?? Colors.grey.shade700,
+                  fontSize: 12,
+                ),
               ),
             ),
           ],

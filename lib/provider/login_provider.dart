@@ -25,7 +25,9 @@ class LoginProvider extends ChangeNotifier {
       isLoading = true;
       error = null;
       notifyListeners();
-      final res = await LoginService(username, password).call();
+      final u = username.trim();
+      final p = password.trim();
+      final res = await LoginService(u, p).call();
       return res;
     } catch (e) {
       // Show backend-provided error if available
