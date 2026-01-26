@@ -92,20 +92,20 @@ String? _extractBoundary(String contentType) {
 String _uniqueFileName(String original) {
   final ts = DateTime.now().millisecondsSinceEpoch;
   final rand = Random().nextInt(99999);
-  final base = original.split('/').last.split('\\').last;
+  final base = original.split('/').last.split(r'\').last;
   return '${ts}_${rand}_$base';
 }
 
 /// Minimal multipart parser for simple file upload (single part suffices).
 class _MultipartParser {
-  final List<int> boundary;
-  final List<int> bytes;
   _MultipartParser(String boundary, this.bytes)
     : boundary = utf8.encode('--$boundary');
+  final List<int> boundary;
+  final List<int> bytes;
 
   List<_Part> parse() {
     final parts = <_Part>[];
-    int index = 0;
+    var index = 0;
     while (true) {
       final start = _find(bytes, boundary, index);
       if (start == -1) break;
@@ -154,7 +154,7 @@ class _MultipartParser {
   }
 
   int _find(List<int> source, List<int> pattern, int start) {
-    for (int i = start; i <= source.length - pattern.length; i++) {
+    for (var i = start; i <= source.length - pattern.length; i++) {
       if (_match(source, i, pattern)) return i;
     }
     return -1;
@@ -162,7 +162,7 @@ class _MultipartParser {
 
   bool _match(List<int> source, int start, List<int> pattern) {
     if (start + pattern.length > source.length) return false;
-    for (int i = 0; i < pattern.length; i++) {
+    for (var i = 0; i < pattern.length; i++) {
       if (source[start + i] != pattern[i]) return false;
     }
     return true;
@@ -170,10 +170,10 @@ class _MultipartParser {
 }
 
 class _Part {
+  const _Part({required this.name, required this.filename, required this.data});
   final String? name;
   final String? filename;
   final List<int> data;
-  const _Part({required this.name, required this.filename, required this.data});
 
   static const empty = _Part(name: null, filename: null, data: <int>[]);
 }

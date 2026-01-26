@@ -7,7 +7,7 @@ import 'package:myfirst_flutter_project/style/app_color.dart';
 import 'package:provider/provider.dart';
 
 class SignupPage extends StatelessWidget {
-  SignupPage({super.key});
+  const SignupPage({super.key});
 
   @override
   Widget build(BuildContext context) {

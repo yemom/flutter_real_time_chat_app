@@ -56,7 +56,7 @@ Middleware _serveUploads() {
       };
 
       if (method == HttpMethod.head) {
-        return Response(statusCode: HttpStatus.ok, headers: headers);
+        return Response(headers: headers);
       }
 
       // Serve bytes directly; Response doesn't take a stream in this version.

@@ -43,7 +43,7 @@ Future<Response> _handlePost(RequestContext context) async {
   }
 
   UserRepository? repo;
-  var user = null;
+  var user;
   try {
     repo = context.read<UserRepository>();
     user = await repo.getById(userId);

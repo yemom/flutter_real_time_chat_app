@@ -5,37 +5,49 @@ import 'package:myfirst_flutter_project/style/app_color.dart';
 
 class ChatMeItem extends StatelessWidget {
   final Chat chat;
-  const ChatMeItem({super.key, required this.chat});
+  final String timeLabel;
+  const ChatMeItem({super.key, required this.chat, required this.timeLabel});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 16, left: 30, top: 8),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      padding: const EdgeInsets.only(right: 18, left: 46, top: 10, bottom: 4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Expanded(
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: AppColor.primary,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Flexible(
+                child: Container(
+                  constraints: BoxConstraints(
+                    maxWidth: MediaQuery.of(context).size.width * 0.7,
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 10,
+                  ),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFADBE3),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    chat.message,
+                    style: TextStyle(color: AppColor.black, height: 1.35),
                   ),
                 ),
-                child: Text(
-                  chat.message,
-                  style: TextStyle(color: AppColor.black),
-                ),
               ),
-            ),
+              const SizedBox(width: 10),
+              const UserAvatar(size: 40),
+            ],
           ),
-          SizedBox(width: 8),
-          UserAvatar(),
+
+          const SizedBox(height: 6),
+          Text(
+            timeLabel,
+            style: const TextStyle(fontSize: 11, color: Colors.grey),
+          ),
         ],
       ),
     );

@@ -83,8 +83,9 @@ class PostProvider extends ChangeNotifier {
   }
 
   Future<void> pickImage(ImageSource source) async {
-    if (_isPicking)
+    if (_isPicking) {
       return; // prevent double activity results causing plugin crashes
+    }
     _isPicking = true;
     try {
       final path = await Utils.pickImage(source);

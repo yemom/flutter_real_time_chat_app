@@ -49,7 +49,7 @@ class AppRepo extends ChangeNotifier {
 
   void ensureChatSocketConnected() {
     if (_socketConnected) return;
-    final wsUrl = AppConfig.baseUrl.replaceFirst('http', 'ws') + '/ws';
+    final wsUrl = '${AppConfig.baseUrl.replaceFirst('http', 'ws')}/ws';
     try {
       _channel = WebSocketChannel.connect(Uri.parse(wsUrl));
       _socketConnected = true;
