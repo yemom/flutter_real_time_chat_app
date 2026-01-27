@@ -1,4 +1,4 @@
 class AppConfig {
-  // Use the Android emulator loopback to reach host machine.
-  static const baseUrl = 'http://10.0.2.2:8081';
+  // Point to the host machine over LAN so physical devices can reach it.
+  static const baseUrl = 'http://10.5.232.248:8081';
 }

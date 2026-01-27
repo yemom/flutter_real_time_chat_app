@@ -13,49 +13,6 @@ import 'package:myfirst_flutter_project/provider/post_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
-class _ActionButton extends StatelessWidget {
-  const _ActionButton({
-    required this.icon,
-    required this.label,
-    required this.onTap,
-    this.color,
-  });
-
-  final IconData icon;
-  final String label;
-  final VoidCallback onTap;
-  final Color? color;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(8),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(icon, size: 18, color: color ?? Colors.grey.shade700),
-            const SizedBox(width: 6),
-            Flexible(
-              child: Text(
-                label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: 13,
-                  color: color ?? Colors.grey.shade700,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -66,6 +23,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final Map<int, bool> _liked = {};
   final Map<int, int> _likeCount = {};
+  final Map<int, int> _commentCount = {};
+  final Map<int, int> _shareCount = {};
 
   int _postKey(Post post) => post.id ?? post.hashCode;
 
@@ -107,6 +66,10 @@ class _HomePageState extends State<HomePage> {
     );
     if (comment == null || comment.isEmpty) return;
     if (!mounted) return;
+    setState(() {
+      final key = _postKey(post);
+      _commentCount[key] = (_commentCount[key] ?? 0) + 1;
+    });
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(const SnackBar(content: Text('Comment posted.')));
@@ -122,6 +85,10 @@ class _HomePageState extends State<HomePage> {
             ? '${post.message!.trim()}\n$link'
             : link;
     Share.share(text, subject: 'Check this post');
+    setState(() {
+      final key = _postKey(post);
+      _shareCount[key] = (_shareCount[key] ?? 0) + 1;
+    });
   }
 
   Future<void> _messageOwner(Post post) async {
@@ -277,43 +244,15 @@ class _HomePageState extends State<HomePage> {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        PostItem(post: post),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 18,
-                            vertical: 8,
-                          ),
-                          child: Row(
-                            children: [
-                              _ActionButton(
-                                icon:
-                                    (_liked[key] ?? false)
-                                        ? Icons.favorite
-                                        : Icons.favorite_border,
-                                label:
-                                    (_likeCount[key] ?? 0) > 0
-                                        ? '${_likeCount[key]} Like'
-                                        : 'Like',
-                                color:
-                                    (_liked[key] ?? false)
-                                        ? Colors.redAccent
-                                        : Colors.grey.shade700,
-                                onTap: () => _toggleLike(post),
-                              ),
-                              const SizedBox(width: 8),
-                              _ActionButton(
-                                icon: Icons.mode_comment_outlined,
-                                label: 'Comment',
-                                onTap: () => _commentOnPost(post),
-                              ),
-                              const SizedBox(width: 8),
-                              _ActionButton(
-                                icon: Icons.share_outlined,
-                                label: 'Share',
-                                onTap: () => _sharePost(post),
-                              ),
-                            ],
-                          ),
+                        PostItem(
+                          post: post,
+                          liked: _liked[key] ?? false,
+                          likeCount: _likeCount[key] ?? 0,
+                          commentCount: _commentCount[key] ?? 0,
+                          shareCount: _shareCount[key] ?? 0,
+                          onLike: () => _toggleLike(post),
+                          onComment: () => _commentOnPost(post),
+                          onShare: () => _sharePost(post),
                         ),
                         const SizedBox(height: 6),
                       ],

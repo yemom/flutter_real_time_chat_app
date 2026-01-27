@@ -185,9 +185,7 @@ class SignupPage extends StatelessWidget {
                           ),
                           child: const Text(
                             AppString.login,
-                            style: TextStyle(
-                              decoration: TextDecoration.underline,
-                            ),
+                            style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
                       ],

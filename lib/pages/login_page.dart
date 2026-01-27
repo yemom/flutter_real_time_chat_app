@@ -216,7 +216,7 @@ class LoginPage extends StatelessWidget {
                       ),
                       child: Text(
                         AppString.signup,
-                        style: TextStyle(decoration: TextDecoration.underline),
+                        style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
                   ],
