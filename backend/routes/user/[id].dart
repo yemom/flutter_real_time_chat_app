@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dart_frog/dart_frog.dart';
 import '../../prisma/prisma/generated_dart_client/user_repository.dart';
+import '../../lib/location_store.dart';
 
 Future<Response> onRequest(RequestContext context, String id) async {
   return switch (context.request.method) {
@@ -45,10 +46,27 @@ Future<Response> _updateUser(String id, RequestContext context) async {
   final username = json['username'] as String?;
   final password = json['password'] as String?;
 
+  Map<String, dynamic>? location;
+  final rawLocation = json['location'];
+  if (rawLocation is Map<String, dynamic>) {
+    location = rawLocation;
+  } else if (rawLocation is Map) {
+    location = Map<String, dynamic>.from(rawLocation);
+  }
+
+  if (location != null) {
+    userLocations[parsedId] = {
+      'lat': location['lat'],
+      'lng': location['lng'],
+      'name': location['name'],
+    };
+  }
+
   if (name == null &&
       lastname == null &&
       username == null &&
-      password == null) {
+      password == null &&
+      location == null) {
     return Response.json(
       body: {'error': 'Nothing to update'},
       statusCode: HttpStatus.badRequest,
@@ -71,7 +89,15 @@ Future<Response> _updateUser(String id, RequestContext context) async {
     );
   }
 
+  final userJson = updated?.toJson() ?? {};
+  final loc = userLocations[parsedId];
+  if (loc != null) {
+    userJson['lat'] = loc['lat'];
+    userJson['lng'] = loc['lng'];
+    userJson['location'] = loc['name'];
+  }
+
   return Response.json(
-    body: {'message': 'User updated successfully', 'user': updated},
+    body: {'message': 'User updated successfully', 'user': userJson},
   );
 }

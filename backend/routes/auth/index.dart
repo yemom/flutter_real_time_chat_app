@@ -36,7 +36,11 @@ Future<Response> _authUser(RequestContext context) async {
   final jwt = JWT({'userId': user.id});
   final token = jwt.sign(SecretKey('1221'));
   return Response.json(
-    body: {'message': 'User authenticated', 'user': user, 'token': token},
+    body: {
+      'message': 'User authenticated',
+      'user': user.toJson(),
+      'token': token,
+    },
   );
 }
 

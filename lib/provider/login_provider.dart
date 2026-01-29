@@ -30,11 +30,8 @@ class LoginProvider extends ChangeNotifier {
       final res = await LoginService(u, p).call();
       return res;
     } catch (e) {
-      // Show backend-provided error if available
-      error =
-          e is ApiException
-              ? e.message
-              : 'Login failed. Check your credentials.';
+      // Show backend-provided error if available; otherwise show exception text
+      error = e is ApiException ? e.message : e.toString();
       notifyListeners();
       rethrow;
     } finally {

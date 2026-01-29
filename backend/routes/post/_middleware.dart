@@ -10,7 +10,8 @@ Handler middleware(Handler handler) {
 Middleware _provideAuthentication() {
   return bearerAuthentication<int>(
     authenticator: (context, token) async {
-      // First try JWT, then allow plain numeric tokens, finally default to 1 to avoid 401s in dev.
+      // First try JWT, then allow plain numeric tokens, finally default to 1
+      // to avoid 401s in dev.
       final jwtUser = fetchUserFromToken(token);
       if (jwtUser != null) return jwtUser;
       final numeric = int.tryParse(token);

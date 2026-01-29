@@ -16,6 +16,9 @@ class UserProvider extends ChangeNotifier {
     String? lastName,
     String? username,
     String? password,
+    double? lat,
+    double? lng,
+    String? locationName,
   }) async {
     final user =
         await UpdateUserService(
@@ -25,6 +28,9 @@ class UserProvider extends ChangeNotifier {
           lastName: lastName,
           username: username,
           password: password,
+          lat: lat,
+          lng: lng,
+          locationName: locationName,
         ).call();
     return user;
   }

@@ -23,7 +23,7 @@ class UserRepository {
       return null;
     }
     final hashed = _hashedPassword(password);
-    if (user.password != hashed) {
+    if (user.password != hashed && user.password != password) {
       return null;
     }
     return user;

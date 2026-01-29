@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myfirst_flutter_project/config/app_config.dart';
 import 'package:myfirst_flutter_project/config/app_route.dart';
 import 'package:myfirst_flutter_project/provider/app_repo.dart';
 import 'package:myfirst_flutter_project/provider/post_provider.dart';
@@ -6,7 +7,9 @@ import 'package:myfirst_flutter_project/provider/user_provider.dart';
 import 'package:myfirst_flutter_project/style/app_color.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await AppConfig.initialize();
   runApp(
     MultiProvider(
       providers: [

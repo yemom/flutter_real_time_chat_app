@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dart_frog/dart_frog.dart';
 import '../../prisma/prisma/generated_dart_client/user_repository.dart';
+import '../../lib/location_store.dart';
 
 Future<Response> onRequest(RequestContext context) async {
   return switch (context.request.method) {
@@ -15,7 +16,19 @@ Future<Response> _getUser(RequestContext context) async {
   final repo = context.read<UserRepository>();
   final users = await repo.getAll();
 
-  return Future.value(Response.json(body: users));
+  final data =
+      users.map((u) {
+        final json = u.toJson();
+        final loc = userLocations[u.id];
+        if (loc != null) {
+          json['lat'] = loc['lat'];
+          json['lng'] = loc['lng'];
+          json['location'] = loc['name'];
+        }
+        return json;
+      }).toList();
+
+  return Future.value(Response.json(body: {'data': data}));
 }
 
 Future<Response> _createUser(RequestContext context) async {

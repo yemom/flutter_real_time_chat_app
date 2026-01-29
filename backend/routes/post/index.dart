@@ -2,24 +2,28 @@ import 'dart:io';
 
 import 'package:dart_frog/dart_frog.dart';
 
+import '../../prisma/prisma/generated_dart_client/model.dart';
 import '../../prisma/prisma/generated_dart_client/user_repository.dart';
 
 // Simple in-memory store so the endpoint works without a Post table yet.
 final List<Map<String, dynamic>> _posts = [];
 
 Future<Response> onRequest(RequestContext context) async {
-  switch (context.request.method) {
-    case HttpMethod.get:
-      return _handleGet(context);
-    case HttpMethod.post:
-      return _handlePost(context);
-    case HttpMethod.put:
-      return _handleUpdate(context);
-    case HttpMethod.delete:
-      return _handleDelete(context);
-    default:
-      return Response(statusCode: HttpStatus.methodNotAllowed);
+  final method = context.request.method;
+  if (method == HttpMethod.get) {
+    return _handleGet(context);
   }
+  if (method == HttpMethod.post) {
+    return _handlePost(context);
+  }
+  if (method == HttpMethod.put) {
+    return _handleUpdate(context);
+  }
+  if (method == HttpMethod.delete) {
+    return _handleDelete(context);
+  }
+
+  return Response(statusCode: HttpStatus.methodNotAllowed);
 }
 
 Future<Response> _handleGet(RequestContext context) async {
@@ -43,7 +47,7 @@ Future<Response> _handlePost(RequestContext context) async {
   }
 
   UserRepository? repo;
-  var user;
+  User? user;
   try {
     repo = context.read<UserRepository>();
     user = await repo.getById(userId);

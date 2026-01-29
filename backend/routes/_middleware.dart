@@ -5,7 +5,8 @@ import 'package:dart_frog/dart_frog.dart';
 import '../prisma/prisma/generated_dart_client/client.dart';
 import '../prisma/prisma/generated_dart_client/user_repository.dart';
 
-// Use DATABASE_URL from environment, with a safe default matching docker-compose.
+// Use DATABASE_URL from environment, with a safe default matching
+// docker-compose.
 final String _datasourceUrl =
     Platform.environment['DATABASE_URL'] ??
     'mysql://root:1221@localhost:3306/mydb';
@@ -48,7 +49,7 @@ Middleware _serveUploads() {
         return Response(statusCode: HttpStatus.notFound);
       }
 
-      final stat = await file.stat();
+      final stat = file.statSync();
       final headers = <String, String>{
         HttpHeaders.contentLengthHeader: stat.size.toString(),
         HttpHeaders.contentTypeHeader: _contentType(file.path),
@@ -60,7 +61,7 @@ Middleware _serveUploads() {
       }
 
       // Serve bytes directly; Response doesn't take a stream in this version.
-      final data = await file.readAsBytes();
+      final data = file.readAsBytesSync();
       return Response.bytes(body: data, headers: headers);
     };
   };

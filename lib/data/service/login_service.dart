@@ -17,6 +17,14 @@ class LoginService {
       body: jsonEncode({'username': username, 'password': password}),
     );
     if (result.statusCode < 200 || result.statusCode >= 300) {
+      try {
+        final decoded = jsonDecode(result.body);
+        if (decoded is Map && decoded['error'] != null) {
+          throw Exception(decoded['error'].toString());
+        }
+      } catch (_) {
+        // ignore and fall through
+      }
       throw Exception('Login failed (${result.statusCode}): ${result.body}');
     }
 

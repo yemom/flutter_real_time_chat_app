@@ -7,6 +7,6 @@ void main() {
     const password = '123456';
     final encodedpassword = utf8.encode(password);
     final hash = sha256.convert(encodedpassword);
-    print(hash);
+    expect(hash.toString(), isNotEmpty);
   });
 }

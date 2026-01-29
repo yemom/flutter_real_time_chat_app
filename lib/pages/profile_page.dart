@@ -376,7 +376,13 @@ class _ProfilePageState extends State<ProfilePage> {
                               children: [
                                 Row(
                                   children: [
-                                    UserAvatar(size: 70),
+                                    UserAvatar(
+                                      size: 70,
+                                      imageUrl:
+                                          context
+                                              .watch<AppRepo>()
+                                              .profileImageUrl,
+                                    ),
                                     const SizedBox(width: 16),
                                     Expanded(
                                       child: Column(

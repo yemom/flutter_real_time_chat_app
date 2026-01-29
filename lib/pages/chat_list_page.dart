@@ -111,7 +111,7 @@ class _ChatListPageState extends State<ChatListPage> {
     final first = parts.isNotEmpty ? parts.first : 'Contact';
     final last = parts.length > 1 ? parts.sublist(1).join(' ') : null;
     final id = -DateTime.now().millisecondsSinceEpoch;
-    return User(id, first, last, name, null, null, null, null);
+    return User(id, first, last, name, null, null, null, null, null);
   }
 
   @override

@@ -8,6 +8,7 @@ import 'package:myfirst_flutter_project/data/model/user.dart';
 class AppRepo extends ChangeNotifier {
   String? _token;
   User? user;
+  String? profileImageUrl;
   final List<Chat> _chats = [];
   final Map<int, int> _unreadByUser = {};
   WebSocketChannel? _channel;
@@ -76,5 +77,10 @@ class AppRepo extends ChangeNotifier {
     _channel?.sink.close();
     _channel = null;
     _socketConnected = false;
+  }
+
+  void setProfileImageUrl(String? url) {
+    profileImageUrl = url;
+    notifyListeners();
   }
 }

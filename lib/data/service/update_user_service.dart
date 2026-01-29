@@ -8,6 +8,9 @@ class UpdateUserService extends ServiceBase<User> {
   final String? lastName;
   final String? username;
   final String? password;
+  final double? lat;
+  final double? lng;
+  final String? locationName;
 
   UpdateUserService({
     required this.id,
@@ -16,6 +19,9 @@ class UpdateUserService extends ServiceBase<User> {
     this.lastName,
     this.username,
     this.password,
+    this.lat,
+    this.lng,
+    this.locationName,
   });
 
   @override
@@ -25,6 +31,8 @@ class UpdateUserService extends ServiceBase<User> {
       'lastname': lastName,
       'username': username,
       'password': password,
+      if (lat != null && lng != null)
+        'location': {'lat': lat, 'lng': lng, 'name': locationName ?? ''},
     }..removeWhere(
       (key, value) => value == null || (value is String && value.isEmpty),
     );
