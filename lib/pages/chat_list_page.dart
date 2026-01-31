@@ -101,8 +101,10 @@ class _ChatListPageState extends State<ChatListPage> {
       repo.addChat(Chat(result.message, peer, DateTime.now()));
       Navigator.of(context).pushNamed(AppRoute.chat, arguments: peer);
     } finally {
-      nameCtrl.dispose();
-      msgCtrl.dispose();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        nameCtrl.dispose();
+        msgCtrl.dispose();
+      });
     }
   }
 
@@ -118,6 +120,7 @@ class _ChatListPageState extends State<ChatListPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
       context.read<AppRepo>().ensureChatSocketConnected();
     });
   }
@@ -160,6 +163,7 @@ class _ChatListPageState extends State<ChatListPage> {
               final q = _query.toLowerCase();
               return name.contains(q) || msg.contains(q);
             }).toList();
+    final storyList = _query.isEmpty ? people : filtered;
 
     return Scaffold(
       backgroundColor: AppColor.background,
@@ -248,7 +252,7 @@ class _ChatListPageState extends State<ChatListPage> {
                   vertical: 14,
                 ),
                 scrollDirection: Axis.horizontal,
-                itemCount: people.isEmpty ? 1 : people.length + 1,
+                itemCount: storyList.isEmpty ? 1 : storyList.length + 1,
                 separatorBuilder: (_, __) => const SizedBox(width: 12),
                 itemBuilder: (context, index) {
                   if (index == 0) {
@@ -259,7 +263,7 @@ class _ChatListPageState extends State<ChatListPage> {
                       onTap: _openNewChatComposer,
                     );
                   }
-                  final p = people[index - 1].user;
+                  final p = storyList[index - 1].user;
                   return _StoryAvatar(
                     label: _nameFor(p, short: true),
                     color: Colors.white,
@@ -283,10 +287,12 @@ class _ChatListPageState extends State<ChatListPage> {
                 ),
                 child:
                     filtered.isEmpty
-                        ? const Center(
+                        ? Center(
                           child: Text(
-                            'No conversations yet.',
-                            style: TextStyle(color: Colors.grey),
+                            _query.isEmpty
+                                ? 'No conversations yet.'
+                                : 'No results for "$_query".',
+                            style: const TextStyle(color: Colors.grey),
                           ),
                         )
                         : ListView.separated(

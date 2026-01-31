@@ -89,7 +89,7 @@ Future<Response> _updateUser(String id, RequestContext context) async {
     );
   }
 
-  final userJson = updated?.toJson() ?? {};
+  final userJson = updated.toJson();
   final loc = userLocations[parsedId];
   if (loc != null) {
     userJson['lat'] = loc['lat'];

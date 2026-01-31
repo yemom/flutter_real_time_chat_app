@@ -6,7 +6,6 @@ import 'package:myfirst_flutter_project/config/app_route.dart';
 import 'package:myfirst_flutter_project/config/app_string.dart';
 import 'package:myfirst_flutter_project/config/app_config.dart';
 import 'package:myfirst_flutter_project/data/model/post.dart';
-import 'package:myfirst_flutter_project/data/model/chat.dart';
 import 'package:myfirst_flutter_project/pages/tool_bar.dart';
 import 'package:myfirst_flutter_project/provider/app_repo.dart';
 import 'package:myfirst_flutter_project/provider/post_provider.dart';
@@ -91,74 +90,11 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  Future<void> _messageOwner(Post post) async {
-    final token = context.read<AppRepo>().token;
-    if (token == null || token.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please log in to send messages.')),
-      );
-      return;
-    }
-    final owner = post.owner;
-    if (owner == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('No owner info for this post.')),
-      );
-      return;
-    }
-    final controller = TextEditingController();
-    final name =
-        ((post.owner?.firstname?.trim().isNotEmpty ?? false) ||
-                (post.owner?.lastname?.trim().isNotEmpty ?? false))
-            ? '${post.owner?.firstname ?? ''} ${post.owner?.lastname ?? ''}'
-                .trim()
-            : 'this user';
-    final message = await showDialog<String>(
-      context: context,
-      builder:
-          (ctx) => AlertDialog(
-            title: Text('Message $name'),
-            content: TextField(
-              controller: controller,
-              maxLines: 3,
-              decoration: const InputDecoration(hintText: 'Type your message'),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(ctx).pop(),
-                child: const Text('Cancel'),
-              ),
-              ElevatedButton(
-                onPressed: () => Navigator.of(ctx).pop(controller.text.trim()),
-                child: const Text('Send'),
-              ),
-            ],
-          ),
-    );
-    if (message == null || message.isEmpty) return;
-    if (!mounted) return;
-    final repo = context.read<AppRepo>();
-    final me = repo.user;
-    if (me != null) {
-      final now = DateTime.now();
-      // Outgoing bubble
-      repo.addChat(Chat(message, me, now));
-      // Echo as incoming so the thread and recent list show immediately.
-      repo.addChat(
-        Chat(message, owner, now.add(const Duration(milliseconds: 1))),
-      );
-      repo.markConversationRead(owner.id);
-      Navigator.of(context).pushNamed(AppRoute.chat, arguments: owner);
-    }
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text('Message sent to $name')));
-  }
-
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
       final token = context.read<AppRepo>().token;
       if (token != null && token.isNotEmpty) {
         context.read<PostProvider>().getPost(token);

@@ -27,6 +27,12 @@ class _UserPageState extends State<UserPage> {
   }
 
   @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
@@ -60,15 +66,13 @@ class _UserPageState extends State<UserPage> {
 
 class MyUserAppbar extends StatelessWidget {
   final double offset;
-  var expanded = true;
   MyUserAppbar({super.key, required this.offset});
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final progress = offset / width;
-    expanded = progress < 0.04;
-    print(expanded);
+    final expanded = progress < 0.04;
     return AnimatedContainer(
       duration: Duration(milliseconds: 200),
       width: double.infinity,

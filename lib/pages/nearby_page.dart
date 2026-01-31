@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:myfirst_flutter_project/component/user_page_image.dart';
 import 'package:myfirst_flutter_project/component/toolbar.dart';
 import 'package:myfirst_flutter_project/config/app_string.dart';
 import 'package:myfirst_flutter_project/provider/user_provider.dart';
@@ -20,6 +19,12 @@ class NearbyPage extends StatefulWidget {
 
 class _NearbyPageState extends State<NearbyPage> {
   final pageController = PageController(viewportFraction: 0.9);
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
