@@ -6,8 +6,9 @@ class Post {
   final User? owner;
   final DateTime? date;
   final String? image;
+  final int? likes;
 
-  Post(this.id, this.message, this.owner, this.date, this.image);
+  Post(this.id, this.message, this.owner, this.date, this.image, this.likes);
 
   factory Post.fromJson(Map<String, dynamic> json) => Post(
     json['id'],
@@ -15,5 +16,6 @@ class Post {
     json['owner'] == null ? null : User.fromJson(json['owner']),
     json['date'] == null ? null : DateTime.parse(json['date']),
     json['image'],
+    json['likes'] as int?,
   );
 }

@@ -85,6 +85,7 @@ class _NearbyPageState extends State<NearbyPage> {
                                   duration: const Duration(milliseconds: 1000),
                                   curve: Curves.easeIn,
                                 );
+                                _showUserInfo(context, user);
                               },
                               child: Column(
                                 children: [
@@ -130,6 +131,128 @@ class _NearbyPageState extends State<NearbyPage> {
       ),
     );
   }
+}
+
+void _showUserInfo(BuildContext context, User user) {
+  final name = _displayName(user);
+  final message = _statusMessage(user);
+
+  showModalBottomSheet<void>(
+    context: context,
+    backgroundColor: Colors.transparent,
+    builder: (context) {
+      return Container(
+        padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                CircleAvatar(
+                  radius: 28,
+                  backgroundColor: Colors.blueGrey.shade100,
+                  child: Text(
+                    _initialsForUser(user),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        name,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        message,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            if (user.location?.name?.isNotEmpty ?? false) ...[
+              const SizedBox(height: 12),
+              Row(
+                children: [
+                  Icon(
+                    Icons.location_on,
+                    size: 16,
+                    color: Colors.grey.shade600,
+                  ),
+                  const SizedBox(width: 6),
+                  Expanded(
+                    child: Text(
+                      user.location!.name,
+                      style: TextStyle(color: Colors.grey.shade600),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+            const SizedBox(height: 16),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: const Text('Follow'),
+              ),
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
+
+String _displayName(User user) {
+  final first = (user.firstname ?? '').trim();
+  final last = (user.lastname ?? '').trim();
+  final full = [first, last].where((value) => value.isNotEmpty).join(' ');
+  if (full.isNotEmpty) return full;
+  final username = (user.username ?? '').trim();
+  return username.isNotEmpty ? username : 'Unknown user';
+}
+
+String _statusMessage(User user) {
+  final username = (user.username ?? '').trim();
+  if (username.isNotEmpty) return '@$username';
+  final mobile = (user.mobile ?? '').trim();
+  if (mobile.isNotEmpty) return mobile;
+  return 'Tap to view profile';
+}
+
+String _initialsForUser(User user) {
+  final name = _displayName(user);
+  final parts = name.split(' ').where((part) => part.isNotEmpty).toList();
+  if (parts.isEmpty) return '?';
+  if (parts.length == 1) return parts.first.substring(0, 1).toUpperCase();
+  return (parts.first.substring(0, 1) + parts.last.substring(0, 1))
+      .toUpperCase();
 }
 
 ui.Path _getPath(Size size) {

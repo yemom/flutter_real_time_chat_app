@@ -8,6 +8,7 @@ import 'package:myfirst_flutter_project/pages/nearby_page.dart';
 import 'package:myfirst_flutter_project/pages/chat_list_page.dart';
 import 'package:myfirst_flutter_project/pages/chat_page.dart';
 import 'package:myfirst_flutter_project/pages/signup_page.dart';
+import 'package:myfirst_flutter_project/pages/user_page.dart';
 import 'package:myfirst_flutter_project/provider/login_provider.dart';
 import 'package:myfirst_flutter_project/provider/forgot_password_provider.dart';
 import 'package:myfirst_flutter_project/provider/signup_provider.dart';
@@ -32,6 +33,7 @@ class AppRoute {
         ),
     home: (context) => HomePage(),
     main: (context) => MainPage(),
+    user: (context) => UserPage(),
     editProfile: (context) => EditProfilePage(),
     nearby: (contex) => NearbyPage(),
     chats: (context) => const ChatListPage(),
@@ -45,6 +47,7 @@ class AppRoute {
   static const signup = '/signup';
   static const home = '/home';
   static const main = '/main';
+  static const user = '/user';
   static const editProfile = '/edit_profile';
   static const nearby = '/nearby';
   static const chats = '/chats';

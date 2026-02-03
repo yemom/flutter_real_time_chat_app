@@ -12,6 +12,7 @@ import 'package:myfirst_flutter_project/provider/app_repo.dart';
 import 'package:myfirst_flutter_project/provider/post_provider.dart';
 import 'package:myfirst_flutter_project/style/app_text.dart';
 import 'package:myfirst_flutter_project/style/app_color.dart';
+import 'package:myfirst_flutter_project/data/service/like_service.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -40,14 +41,38 @@ class _ProfilePageState extends State<ProfilePage> {
 
   int _postKey(Post post) => post.id ?? post.hashCode;
 
-  void _toggleLike(Post post) {
+  Future<void> _toggleLike(Post post) async {
+    final token = context.read<AppRepo>().token;
+    if (token == null || token.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('You must be logged in to like posts.')),
+      );
+      return;
+    }
+
+    if (post.id == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Unable to like this post.')),
+      );
+      return;
+    }
+
     final key = _postKey(post);
-    final current = _liked[key] ?? false;
-    setState(() {
-      _liked[key] = !current;
-      final next = (_likeCount[key] ?? 0) + (current ? -1 : 1);
-      _likeCount[key] = next < 0 ? 0 : next;
-    });
+    try {
+      final res = await LikeService(postId: post.id!, token: token).call();
+      final isLiked = res['isLiked'] == true;
+      final likes = res['likes'] as int?;
+      setState(() {
+        _liked[key] = isLiked;
+        if (likes != null) {
+          _likeCount[key] = likes;
+        }
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Like failed: $e')));
+    }
   }
 
   Future<void> _commentOnPost(Post post) async {
@@ -544,7 +569,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       return _PostCard(
                         post: p,
                         isLiked: _liked[_postKey(p)] ?? false,
-                        likeCount: _likeCount[_postKey(p)] ?? 0,
+                        likeCount: _likeCount[_postKey(p)] ?? p.likes ?? 0,
                         onLike: () => _toggleLike(p),
                         onComment: () => _commentOnPost(p),
                         onShare: () => _sharePost(p),
