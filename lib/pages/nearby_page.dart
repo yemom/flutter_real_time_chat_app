@@ -11,7 +11,9 @@ import 'dart:math' as math;
 import '../data/model/user.dart';
 
 class NearbyPage extends StatefulWidget {
-  const NearbyPage({super.key});
+  const NearbyPage({super.key, this.showTiles = true});
+
+  final bool showTiles;
 
   @override
   State<NearbyPage> createState() => _NearbyPageState();
@@ -51,12 +53,13 @@ class _NearbyPageState extends State<NearbyPage> {
               FlutterMap(
                 options: MapOptions(center: center, zoom: 10),
                 children: [
-                  TileLayer(
-                    urlTemplate:
-                        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                    userAgentPackageName: 'dev.ces.flutter',
-                    // tileProvider: NetworkTileProvider(),
-                  ),
+                  if (widget.showTiles)
+                    TileLayer(
+                      urlTemplate:
+                          'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                      userAgentPackageName: 'dev.ces.flutter',
+                      // tileProvider: NetworkTileProvider(),
+                    ),
                   MarkerLayer(
                     markers:
                         usersWithLocation.map<Marker>((user) {
@@ -80,11 +83,15 @@ class _NearbyPageState extends State<NearbyPage> {
                                     break;
                                   }
                                 }
-                                pageController.animateToPage(
-                                  page,
-                                  duration: const Duration(milliseconds: 1000),
-                                  curve: Curves.easeIn,
-                                );
+                                if (pageController.hasClients) {
+                                  pageController.animateToPage(
+                                    page,
+                                    duration: const Duration(
+                                      milliseconds: 1000,
+                                    ),
+                                    curve: Curves.easeIn,
+                                  );
+                                }
                                 _showUserInfo(context, user);
                               },
                               child: Column(

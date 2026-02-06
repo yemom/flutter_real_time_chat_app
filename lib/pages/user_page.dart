@@ -160,23 +160,26 @@ class _PostTile extends StatelessWidget {
           ),
           Container(color: Colors.black26),
           Center(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(Icons.favorite, color: Colors.white, size: 20),
-                const SizedBox(width: 6),
-                Text(
-                  '${item.likes}',
-                  style: const TextStyle(color: Colors.white),
-                ),
-                const SizedBox(width: 16),
-                const Icon(Icons.chat_bubble, color: Colors.white, size: 20),
-                const SizedBox(width: 6),
-                Text(
-                  '${item.comments}',
-                  style: const TextStyle(color: Colors.white),
-                ),
-              ],
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.favorite, color: Colors.white, size: 20),
+                  const SizedBox(width: 6),
+                  Text(
+                    '${item.likes}',
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                  const SizedBox(width: 16),
+                  const Icon(Icons.chat_bubble, color: Colors.white, size: 20),
+                  const SizedBox(width: 6),
+                  Text(
+                    '${item.comments}',
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
