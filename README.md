@@ -1,128 +1,77 @@
-💬 Flutter Real-Time Chat App
+# 💬 Social Chat App (Flutter)
 
-A cross-platform real-time chat application built with Flutter, supporting mobile, web, and desktop platforms.
-This project demonstrates real-time messaging, clean UI architecture, and backend integration for modern chat systems.
+A cross-platform Flutter app with social feed, profiles, nearby users map, and in-app chat. This repo is **not** Firebase-backed; it uses a custom REST backend and a WebSocket for chat.
 
-🚀 Features
+---
 
-🔐 User authentication
+## ✨ Features (Implemented)
 
-💬 Real-time one-to-one messaging
+- 🔐 **Authentication** – Login, signup, and forgot password flows.
+- 🧑‍🤝‍🧑 **Profiles** – Profile page, edit profile, avatar upload, and cover photo.
+- 📰 **Feed** – Post list with like/comment/share actions and image support.
+- ➕ **Create Post** – Compose a post with optional image upload.
+- 🗺️ **Nearby** – Map view with user markers and bottom-sheet user cards.
+- 💬 **Chat**
+  - Chat list with search and recent conversations
+  - In-app chat screen with message composer
+  - WebSocket listener for incoming messages
+  - Unread counts per conversation
 
-🟢 Online / offline user status
+---
 
-📱 Cross-platform support (Android, iOS, Web, Desktop)
+## 🧩 Planned / Not Yet Implemented
 
-🧠 Clean Flutter project structure
+- ✅ Typing indicators
+- ✅ Presence / online status
+- ✅ Push notifications
+- ✅ Media sharing in chat (image/video)
+- ✅ End-to-end encryption
 
-🌐 Backend integration for real-time communication
+## 🛠️ Tech Stack
 
-📦 Scalable and extendable architecture
+- **Flutter & Dart** – Cross-platform UI and logic.
+- **Provider** – State management.
+- **REST API** – For auth, posts, and profile updates.
+- **WebSocket** – For realtime chat updates.
+- **flutter_map / OpenStreetMap** – Nearby map UI.
 
-⚠️ Some advanced features (typing indicators, media sharing, push notifications) can be added in future updates.
+---
 
-🛠️ Tech Stack
-Frontend
+## 📁 Project Structure
 
-Flutter
+lib/
+├── data/ # Models + API services
+├── pages/ # App screens
+├── component/ # Reusable UI widgets
+├── provider/ # App-wide state management
+├── config/ # Routes, strings, app config
+└── main.dart # App entry point
 
-Dart
+## ▶️ How to Run
 
-Material UI
+### Prerequisites
 
-Backend
+- Flutter SDK (stable)
+- A running backend API (see backend/README.md if present)
 
-Custom backend (inside /backend folder)
+### Configure API Base URL
 
-Real-time communication logic
+The app reads the API base URL from:
 
-API-based message handling
+- `--dart-define=MOBILE_HOST=...` (preferred), or
+- the default in `AppConfig` (LAN host)
 
-You can replace or extend the backend with Firebase, Socket.IO, or any real-time service.
+Example:
 
-📂 Project Structure
-flutter_real_time_chat_app/
-│
-├── lib/                # Flutter UI & logic
-├── backend/            # Server-side logic
-├── assets/             # Images & static assets
-├── test/               # Unit tests
-├── integration_test/   # Integration tests
-├── android/            # Android config
-├── ios/                # iOS config
-├── web/                # Web support
-├── windows/            # Windows support
-├── linux/              # Linux support
-├── macos/              # macOS support
-└── pubspec.yaml
+- Android emulator: `--dart-define=MOBILE_HOST=http://10.0.2.2:8081`
+- Physical device (LAN): `--dart-define=MOBILE_HOST=http://<your-lan-ip>:8081`
 
-⚙️ Installation & Setup
-1️⃣ Clone the repository
-git clone https://github.com/yemom/flutter_real_time_chat_app.git
-cd flutter_real_time_chat_app
+### Run the App
 
-2️⃣ Install dependencies
-flutter pub get
+1. `flutter pub get`
+2. `flutter run --dart-define=MOBILE_HOST=http://<host>:8081`
 
-3️⃣ Run the backend
+### Run Tests
 
-Navigate to the backend folder and start the server (instructions depend on backend implementation):
-
-cd backend
-# run backend service here
-
-4️⃣ Run the Flutter app
-flutter run
-
-📸 Screenshots (Add Yours)
-
-📌 Add screenshots here once available
-
-Login Screen
-Chat List
-Chat Conversation
-
-🧪 Testing
-
-Run Flutter tests using:
-
-flutter test
-
-📈 Future Improvements
-
-📎 Media sharing (images, videos, files)
-
-✍️ Typing indicators
-
-🔔 Push notifications
-
-👥 Group chats
-
-🔒 End-to-end encryption
-
-🌍 Cloud deployment
-
-👨‍💻 Author
-
-Esrom Basazinaw
-Software Engineering Student
-GitHub: @yemom
-
-⭐ Support
-
-If you like this project, give it a star ⭐
-Feedback and contributions are always welcome!
-
-🧠 Why This Project Matters
-
-This app showcases:
-
-Real-time system concepts
-
-Flutter multi-platform development
-
-Backend + frontend integration
-
-Clean project organization
-
-Perfect for learning, portfolio, and real-world practice.
+- Widget tests: `flutter test`
+- Integration tests: `flutter test integration_test/all_pages_test.dart`
