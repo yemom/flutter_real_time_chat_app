@@ -14,7 +14,7 @@ class Post {
       json['postId'] as int,
       hasUser ? User.fromFields(json) : null,
       json['message'] as String,
-      DateTime.parse((json['date'] as String)).toIso8601String(),
+      DateTime.parse(json['date'] as String).toIso8601String(),
       json['image'] as String?,
       json['likes'] as int?,
     );

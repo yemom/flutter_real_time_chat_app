@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:dart_frog/dart_frog.dart';
 import '../../prisma/prisma/generated_dart_client/user_repository.dart';
-import '../../lib/location_store.dart';
+import 'package:test_server/location_store.dart';
 
 Future<Response> onRequest(RequestContext context, String id) async {
   return switch (context.request.method) {

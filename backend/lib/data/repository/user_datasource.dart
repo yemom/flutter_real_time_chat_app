@@ -9,7 +9,7 @@ class UserDatasource {
   Future<User> getUser(String username) async {
     final result = await _mysqlClient.execute(
       'SELECT * FROM users WHERE username= :username;',
-      {"username": username},
+      {'username': username},
     );
     if (result.rows.isEmpty) throw NotFoundExeption('User not found', 404);
     final user = User.fromFields(result.rows.first.typedAssoc());
@@ -19,7 +19,7 @@ class UserDatasource {
   Future<User> getUserById(int id) async {
     final result = await _mysqlClient.execute(
       'SELECT * FROM users WHERE userId= :userId;',
-      {"userId": id},
+      {'userId': id},
     );
     if (result.rows.isEmpty) throw NotFoundExeption('User not found', 404);
     final user = User.fromFields(result.rows.first.typedAssoc());
@@ -91,7 +91,7 @@ class UserDatasource {
           throw DatabaseExeption('Username is already taken', 403);
         });
 
-    print('sttttttttttt:${result.toString()}');
+    print('sttttttttttt:${result}');
 
     return result.lastInsertID.toInt();
   }

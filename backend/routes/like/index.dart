@@ -62,7 +62,7 @@ Future<Response> _like(RequestContext context) async {
 
   final aggregate = await db.like.aggregate(
     where: LikeWhereInput(postId: orm.PrismaUnion<IntFilter, int>.$2(postId)),
-    select: AggregateLikeSelect(
+    select: const AggregateLikeSelect(
       $count: orm.PrismaUnion<bool, AggregateLikeCountArgs>.$2(
         AggregateLikeCountArgs(
           select: LikeCountAggregateOutputTypeSelect($all: true),

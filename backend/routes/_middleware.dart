@@ -5,11 +5,12 @@ import 'package:dart_frog/dart_frog.dart';
 import '../prisma/prisma/generated_dart_client/client.dart';
 import '../prisma/prisma/generated_dart_client/user_repository.dart';
 
-// Use DATABASE_URL from environment, with a safe default matching
-// docker-compose.
+final Map<String, String> _envFileValues = _loadEnvFile();
+
 final String _datasourceUrl =
-    Platform.environment['DATABASE_URL'] ??
-    'mysql://root:1221@localhost:3306/mydb';
+  Platform.environment['DATABASE_URL'] ??
+  _envFileValues['DATABASE_URL'] ??
+  'mysql://root:1221@localhost:3306/mydb';
 
 final _prisma = PrismaClient(datasourceUrl: _datasourceUrl);
 
@@ -79,4 +80,38 @@ String _contentType(String filePath) {
 
 Middleware _provideUserRepo() {
   return provider((context) => UserRepository(_prisma));
+}
+
+Map<String, String> _loadEnvFile() {
+  final file = File('.env');
+  if (!file.existsSync()) {
+    return const {};
+  }
+
+  final values = <String, String>{};
+  for (final rawLine in file.readAsLinesSync()) {
+    final line = rawLine.trim();
+    if (line.isEmpty || line.startsWith('#')) {
+      continue;
+    }
+
+    final separator = line.indexOf('=');
+    if (separator <= 0) {
+      continue;
+    }
+
+    final key = line.substring(0, separator).trim();
+    if (key.isEmpty) {
+      continue;
+    }
+
+    var value = line.substring(separator + 1).trim();
+    if (value.length >= 2 && value.startsWith('"') && value.endsWith('"')) {
+      value = value.substring(1, value.length - 1);
+    }
+
+    values[key] = value;
+  }
+
+  return values;
 }

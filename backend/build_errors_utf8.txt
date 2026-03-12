@@ -1,0 +1,46 @@
+﻿Γáï Serving...
+Γ£ô Running on http://localhost:8081 (0.2s)
+The Dart VM service is listening on http://127.0.0.1:8181/A1P6F8quL_k=/
+The Dart DevTools debugger and profiler is available at: http://127.0.0.1:8181/A1P6F8quL_k=/devtools/?uri=ws://127.0.0.1:8181/A1P6F8quL_k=/ws
+dart_frog : prisma/pris
+ma/generated_dart_clien
+t/user_repository.dart:
+41:24: Error: Required 
+named parameter 
+'updatedAt' must be 
+provided.
+At line:1 char:1
++ dart_frog dev --port 
+8081 > 
+build_errors.txt 2>&1
++ ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~
+    + CategoryInfo     
+         : NotSpecifi  
+  ed: (prisma/prisma   
+ /g...st be provide    
+d.:String) [], Rem    
+oteException
+    + FullyQualifiedEr 
+   rorId : NativeComm  
+  andError
+ 
+        
+UserCreateInput(
+                       
+^
+prisma/prisma/generated
+_dart_client/prisma.dar
+t:12880:9: Context: 
+Found this candidate, 
+but the arguments 
+don't match.
+  const 
+UserCreateInput({
+        ^^^^^^^^^^^^^^^
+[process] Server process has been terminated
+
+Update available! 1.2.11 ΓåÆ 1.2.13
+Changelog: https://github.com/dart-frog-dev/dart_frog/releases/tag/dart_frog_cli-v1.2.13
+Run dart_frog update to update

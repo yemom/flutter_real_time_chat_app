@@ -23,7 +23,7 @@ class UserRepository {
       return null;
     }
     final hashed = _hashedPassword(password);
-    if (user.password != hashed && user.password != password) {
+    if (user.passwordHash != hashed && user.passwordHash != password) {
       return null;
     }
     return user;
@@ -42,7 +42,8 @@ class UserRepository {
           name: name,
           lastname: lastname,
           username: username,
-          password: _hashedPassword(password),
+          passwordHash: _hashedPassword(password),
+          updatedAt: DateTime.now(),
         ),
       ),
     );
@@ -89,7 +90,7 @@ class UserRepository {
                         StringFieldUpdateOperationsInput
                       >.$1(username)
                       : null,
-              password:
+              passwordHash:
                   hashed != null
                       ? orm.PrismaUnion<
                         String,
@@ -129,7 +130,7 @@ class UserRepository {
         where: UserWhereUniqueInput(username: username),
         data: orm.PrismaUnion<UserUpdateInput, UserUncheckedUpdateInput>.$1(
           UserUpdateInput(
-            password:
+            passwordHash:
                 orm.PrismaUnion<String, StringFieldUpdateOperationsInput>.$1(
                   hashed,
                 ),

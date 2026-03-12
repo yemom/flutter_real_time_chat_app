@@ -1,11 +1,13 @@
 $Port = 8081
+$VmServicePort = 8181
 
-$processId = netstat -ano | findstr ":$Port" | ForEach-Object {
-    ($_ -split '\s+')[-1]
-} | Select-Object -First 1
+$processIds = @(Get-NetTCPConnection -LocalPort @($Port, $VmServicePort) -ErrorAction SilentlyContinue |
+    Select-Object -ExpandProperty OwningProcess -Unique)
 
-if ($processId) {
-    & taskkill /PID $processId /F
+foreach ($processId in $processIds) {
+    if ($processId) {
+        & taskkill /PID $processId /F | Out-Null
+    }
 }
 
 dart_frog dev --port $Port --hostname 0.0.0.0

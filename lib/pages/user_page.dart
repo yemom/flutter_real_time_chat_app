@@ -66,7 +66,7 @@ class _UserPageState extends State<UserPage> {
 
 class MyUserAppbar extends StatelessWidget {
   final double offset;
-  MyUserAppbar({super.key, required this.offset});
+  const MyUserAppbar({super.key, required this.offset});
 
   @override
   Widget build(BuildContext context) {

@@ -3,6 +3,21 @@ import 'dart:convert';
 import 'package:test_server/data/models/location.dart';
 
 class User {
+
+  User(
+    this.id,
+    this.username,
+    this.firstname,
+    this.lastname,
+    this.mobile,
+    this.birthday,
+    this.location,
+    this.gender,
+    this.visibleGender,
+    this.password,
+    this.token,
+    this.avatar,
+  );
   factory User.fromFields(Map<String, dynamic> json) {
     print(json);
     return User(
@@ -24,21 +39,6 @@ class User {
       json['avatar'] as String?,
     );
   }
-
-  User(
-    this.id,
-    this.username,
-    this.firstname,
-    this.lastname,
-    this.mobile,
-    this.birthday,
-    this.location,
-    this.gender,
-    this.visibleGender,
-    this.password,
-    this.token,
-    this.avatar,
-  );
 
   Map<String, dynamic> toJsonLogin() => {
     'id': id,

@@ -196,7 +196,7 @@ void _showUserInfo(BuildContext context, User user) {
                 ),
               ],
             ),
-            if (user.location?.name?.isNotEmpty ?? false) ...[
+            if (user.location?.name.isNotEmpty ?? false) ...[
               const SizedBox(height: 12),
               Row(
                 children: [

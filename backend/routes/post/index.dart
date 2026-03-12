@@ -28,14 +28,14 @@ Future<Response> onRequest(RequestContext context) async {
 Future<Response> _handleGet(RequestContext context) async {
   final db = context.read<PrismaClient>();
   final posts = await db.post.findMany(
-    orderBy: orm.PrismaUnion<
+    orderBy: const orm.PrismaUnion<
       Iterable<PostOrderByWithRelationInput>,
       PostOrderByWithRelationInput
     >.$2(PostOrderByWithRelationInput(date: SortOrder.desc)),
-    include: PostInclude(
-      owner: orm.PrismaUnion<bool, PostOwnerArgs>.$1(true),
+    include: const PostInclude(
+      user: orm.PrismaUnion<bool, PostUserArgs>.$1(true),
       $count: orm.PrismaUnion<bool, PostCountArgs>.$2(
-        PostCountArgs(select: PostCountOutputTypeSelect(likes: true)),
+        PostCountArgs(select: PostCountOutputTypeSelect(like: true)),
       ),
     ),
   );
@@ -80,15 +80,15 @@ Future<Response> _handlePost(RequestContext context) async {
             normalizedImage == null
                 ? null
                 : orm.PrismaUnion<String, orm.PrismaNull>.$1(normalizedImage),
-        owner: UserCreateNestedOneWithoutPostsInput(
+        user: UserCreateNestedOneWithoutPostInput(
           connect: UserWhereUniqueInput(id: userId),
         ),
       ),
     ),
-    include: PostInclude(
-      owner: orm.PrismaUnion<bool, PostOwnerArgs>.$1(true),
+    include: const PostInclude(
+      user: orm.PrismaUnion<bool, PostUserArgs>.$1(true),
       $count: orm.PrismaUnion<bool, PostCountArgs>.$2(
-        PostCountArgs(select: PostCountOutputTypeSelect(likes: true)),
+        PostCountArgs(select: PostCountOutputTypeSelect(like: true)),
       ),
     ),
   );
@@ -174,14 +174,14 @@ Future<Response> _handleUpdate(RequestContext context) async {
                     NullableStringFieldUpdateOperationsInput,
                     orm.PrismaNull
                   >
-                >.$1(image!)
+                >.$1(image)
                 : null,
       ),
     ),
-    include: PostInclude(
-      owner: orm.PrismaUnion<bool, PostOwnerArgs>.$1(true),
+    include: const PostInclude(
+      user: orm.PrismaUnion<bool, PostUserArgs>.$1(true),
       $count: orm.PrismaUnion<bool, PostCountArgs>.$2(
-        PostCountArgs(select: PostCountOutputTypeSelect(likes: true)),
+        PostCountArgs(select: PostCountOutputTypeSelect(like: true)),
       ),
     ),
   );
@@ -245,13 +245,13 @@ Future<Response> _handleDelete(RequestContext context) async {
 }
 
 Map<String, dynamic> _postToJson(Post post) {
-  final owner = post.owner;
+  final owner = post.user;
   return {
     'id': post.id,
     'message': post.message,
     'image': post.image,
     'date': post.date?.toIso8601String(),
-    'likes': post.$count?.likes ?? 0,
+    'likes': post.$count?.like ?? 0,
     'owner':
         owner == null
             ? null
